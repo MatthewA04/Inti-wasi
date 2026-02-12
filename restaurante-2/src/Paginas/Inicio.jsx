@@ -3,8 +3,8 @@ import Footer from "../Componentes/FooterComponente.jsx";
 import Experiencias from "../Componentes/Experiencias.jsx";
 import Banners from "../Componentes/Banners.jsx";
 import ImgPlato1 from "../Media/camino-del-sol.png";
-import ImgPlato2 from "../Media/Sabores-del-Altiplano.png";
-import ImgPlato3 from "../Media/Ritual-del-maiz-sagrado.png";
+import ImgPlato2 from "../Media/sabores-del-altiplano.png";
+import ImgPlato3 from "../Media/ritual-del-maiz-sagrado.png";
 
 function Inicio() {
   return (
