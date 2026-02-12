@@ -9,7 +9,7 @@ import Step5Datos from "../Componentes/Step5Datos.jsx";
 import StepFinal from "../Componentes/StepFinal.jsx";
 import Header from "../Componentes/HeaderComponente.jsx";
 import Footer from "../Componentes/FooterComponente.jsx";
-import "../Index.css";
+import "../index.css";
 
 const Mesas = memo(() => {
   const { state } = useReserva();
