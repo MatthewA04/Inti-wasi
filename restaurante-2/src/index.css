@@ -1,0 +1,518 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
+
+body {
+  margin: 0;
+  font-family: "lato", serif;
+}
+
+.titulos {
+  font-family: "cinzel";
+  font-weight: 400;
+  font-size: 45px;
+  color: #000;
+  text-align: center;
+}
+
+.margin-bottom-l {
+  margin-bottom: 45px;
+}
+
+.contenedor {
+  display: block;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: space-around;
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+.banner {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+}
+
+.contenedorExperiencia {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.imgExperiencia {
+  object-fit: cover;
+  border-radius: 45px;
+}
+.tituloExperiencia {
+  width: 100%;
+  height: 99%;
+  opacity: 0;
+  background-color: #c8a4658c;
+  transition: 0.5s;
+  position: absolute;
+  z-index: 9;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  border-radius: 45px;
+}
+
+.tituloExperiencia h3 {
+  font-size: 25px;
+  font-family: "cinzel";
+  color: #fff;
+}
+
+.tituloExperiencia:hover {
+  opacity: 1;
+}
+
+.experiencias-grid {
+  display: flex;
+  text-align: left;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 30px;
+}
+
+.experiencias {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 2rem;
+  align-items: center;
+}
+
+.columns-2 {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.contenedor-secciones {
+  display: block;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: space-around;
+  padding: 1.5rem 2rem;
+}
+.imagen-lateral {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.reserva {
+  padding-top: 9rem;
+  padding-bottom: 5rem;
+}
+
+.titulo-experciencia {
+  font-size: 25px;
+  color: #000;
+  font-weight: 200;
+  margin: 0px;
+  font-family: cinzel;
+  margin-bottom: 10px;
+}
+
+.experiencia-header {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.experiencia-aco {
+  border-bottom-width: 2px;
+  border-color: #000;
+  border-bottom-style: solid;
+  padding: 25px 25px 5px 25px;
+}
+
+.center-boton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.boton-reserva {
+  background-color: unset;
+  font-family: cinzel;
+  font-size: 30px;
+  border: none;
+  border-bottom-width: 2px;
+  border-color: #000;
+  border-bottom-style: solid;
+}
+
+.boton-reserva:hover {
+  font-weight: 500;
+  color: #d5b97f;
+  border-color: #d5b97f;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+  background-color: transparent;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.formulario-1 {
+  background-image: url(/src/Media/formulario.png);
+  padding-top: 6.9rem;
+  padding-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+}
+.progreso {
+  background-color: #ffffff;
+  padding: 3rem 6rem;
+  width: 100%;
+}
+
+.titulo-form {
+  font-family: cinzel;
+  font-size: 35px;
+  color: #fff;
+  width: 100%;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-color: #fff;
+  margin-bottom: 3rem;
+}
+
+.tarjeta-experiencia {
+  background-color: #585858;
+  border-radius: 15px;
+  border-color: #fff;
+  border-width: 2px;
+  border-style: solid;
+  padding: 1rem 2rem;
+  text-align: start;
+  cursor: pointer;
+  animation-duration: 0.5s;
+}
+.tarjeta-experiencia:hover {
+  background-color: #c8a465;
+  transition-duration: 0.5s;
+}
+
+.sub-titulo-expe {
+  font-family: cinzel;
+  font-size: 25px;
+  color: #fff;
+  text-align: start;
+  font-weight: 600;
+}
+
+.tarjeta-experiencia p {
+  margin-bottom: 0px !important;
+  color: #fff;
+  font-size: 16px;
+}
+
+.contenedor-partes {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.boton-personas {
+  width: 65px;
+  height: 65px;
+  font-size: 1.2rem;
+  transition: 0.3s;
+  align-items: center;
+  cursor: pointer;
+  background-color: #585858;
+  color: #fff;
+  border-color: #fff;
+  border-radius: 50px;
+  font-size: 24px;
+  margin-bottom: 20rem;
+}
+
+.boton-personas:hover {
+  background-color: #c8a465;
+  color: #fff;
+  border-color: #fff;
+}
+.gap-3 {
+  gap: 30px;
+}
+
+.nota {
+  background-color: #ffffff88;
+  color: #000;
+  font-size: 20px;
+  padding: 1rem 2rem;
+  letter-spacing: 2px;
+  border-radius: 15px;
+}
+
+.vista-doble-calendario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  animation: fadeIn 0.5s ease;
+}
+
+.bloque-mes {
+  flex: 1;
+}
+
+.nombre-mes {
+  text-align: center;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+  color: #fff;
+}
+
+.boton-dia.dia-bloqueado {
+  border-color: #333 !important;
+  color: #444 !important;
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.boton-dia {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.calendario-seccion {
+  max-width: 900px;
+  margin: 0 auto;
+  color: white;
+  padding: 20px;
+}
+
+.calendario-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendario-titulo-paso {
+  font-family: "Times New Roman", serif;
+  font-size: 2.5rem;
+  letter-spacing: 5px;
+  margin: 0;
+}
+
+.calendario-nav {
+  display: flex;
+  gap: 15px;
+}
+
+.calendario-nav > button {
+  background: none;
+  box-shadow: none;
+  border-color: #ffffff00;
+}
+
+.flecha-circular {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: 0.3s;
+}
+
+.flecha-circular:hover {
+  background: white;
+  color: black;
+}
+
+.calendario-hr {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 20px 0 40px;
+}
+
+.calendario-vista-doble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.calendario-mes-titulo {
+  text-align: center;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  font-weight: 300;
+}
+
+.calendario-dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.calendario-rejilla {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  justify-items: center;
+}
+
+.calendario-dia {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.9rem;
+  background-color: #585858;
+}
+
+.calendario-dia:hover:not(.bloqueado) {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.calendario-dia.activo {
+  background: white;
+  color: black;
+  font-weight: bold;
+}
+
+.calendario-dia.bloqueado {
+  opacity: 0.2;
+  border-color: #444;
+  color: #666;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.contenedor-tooltip {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.contenedor-tooltip > button {
+  background-color: #585858;
+}
+
+.nube-tooltip {
+  visibility: hidden;
+  width: 100px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -50px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 11px;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.nube-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.contenedor-tooltip:hover .nube-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+label {
+  width: 100%;
+}
+select {
+  width: 100%;
+}
+
+.input-datos {
+  background-color: #585858 !important;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: rgb(255, 255, 255) !important;
+  padding: 10px 20px;
+}
+
+.input-datos-button {
+  background-color: #585858 !important;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: rgb(255, 255, 255) !important;
+  padding: 10px 20px;
+}
+.input-datos-button:hover {
+  background-color: #58585859 !important;
+}
+
+.confirmacion {
+  background: #585858c9;
+  border-radius: 20px;
+  padding: 3rem;
+  color: #fff;
+}
