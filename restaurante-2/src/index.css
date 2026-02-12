@@ -516,3 +516,36 @@ select {
   padding: 3rem;
   color: #fff;
 }
+.cargando {
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite;
+}
+.carga-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cargando {
+  animation: spin 2s linear infinite;
+  filter: drop-shadow(
+    0 0 10px rgba(197, 160, 89, 0.5)
+  ); /* Brillo dorado opcional */
+}

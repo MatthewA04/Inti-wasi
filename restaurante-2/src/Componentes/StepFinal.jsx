@@ -1,11 +1,13 @@
 import { useEffect, useState, memo } from "react";
 import { useReserva } from "../Data/ReservaContext";
+import { useNavigate } from "react-router-dom";
 
 const StepFinal = memo(() => {
-  const { state } = useReserva();
+  const { state, resetReserva } = useReserva();
   const { formData } = state;
   const { cliente } = formData;
   const [numeroReserva, setNumeroReserva] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const reservasExistentes =
@@ -26,6 +28,11 @@ const StepFinal = memo(() => {
     );
   }, []);
 
+  const handleFinalizar = () => {
+    resetReserva();
+    navigate("/");
+  };
+
   const mensajeWhatsapp = `Ya tengo mi reserva.
   
 Numero de reserva: ${numeroReserva}
@@ -39,8 +46,9 @@ Fecha y Hora: ${formData.fecha} a las ${formData.hora}
 Gracias.`;
 
   const linkWhatsapp = `https://wa.me/51960260194?text=${encodeURIComponent(mensajeWhatsapp)}`;
+
   return (
-    <div className=" confirmacion">
+    <div className="confirmacion text-white">
       <div className="text-center">
         <h2 className="mb-4 titulo-form">
           Confirmación de Reserva – INTI WASI
@@ -68,7 +76,7 @@ Gracias.`;
         <p className="mb-1">
           📅 <strong>Confirmación previa obligatoria</strong>
         </p>
-        <ul className="">
+        <ul>
           <li>
             1 día antes de tu reserva recibirás un correo electrónico para
             confirmar tu asistencia.
@@ -79,7 +87,7 @@ Gracias.`;
           </li>
         </ul>
 
-        <p className="small mb-4">
+        <p className="small mb-4 text-secondary">
           Es importante confirmar, ya que las reservas no confirmadas serán
           liberadas automáticamente.
         </p>
@@ -87,11 +95,11 @@ Gracias.`;
         <p className="mb-3">
           📞 <strong>Modificaciones o cancelaciones</strong>
         </p>
-        <p className="">
+        <p>
           Si necesitas cancelar o reprogramar tu reserva, comunícate con
           nosotros con anticipación y ten en cuenta tu numero de reserva:
         </p>
-        <ul className="">
+        <ul>
           <li>– WhatsApp / Teléfono: +51 960 260 194</li>
           <li>– Correo: cancelar@intiwasi.com</li>
         </ul>
@@ -103,13 +111,13 @@ Gracias.`;
         <p className="mt-4 text-center fw-bold">
           ✨ Gracias por confiar en Inti Wasi.
         </p>
-        <p className="text-center italic small">
+        <p className="text-center italic small mb-0">
           Te esperamos para brindarte una experiencia gastronómica de origen,
           tradición y calidez.
         </p>
       </div>
 
-      <div className="mt-5 text-center">
+      <div className="mt-5 text-center d-flex flex-column align-items-center gap-3">
         <a
           href={linkWhatsapp}
           target="_blank"
@@ -118,6 +126,21 @@ Gracias.`;
         >
           Enviar reserva por WhatsApp
         </a>
+
+        <button
+          onClick={handleFinalizar}
+          className="btn-finalizar-limpiar"
+          style={{
+            background: "transparent",
+            border: "1px solid #C5A059",
+            color: "#C5A059",
+            padding: "10px 30px",
+            cursor: "pointer",
+            transition: "all 0.3s",
+          }}
+        >
+          Finalizar y Volver al Inicio
+        </button>
       </div>
     </div>
   );

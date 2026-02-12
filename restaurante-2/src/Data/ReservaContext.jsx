@@ -40,6 +40,11 @@ function reservaReducer(state, action) {
         ...state,
         formData: { ...state.formData, ...action.payload },
       };
+    case "RESET_FORM":
+      return {
+        ...initialState,
+        step: 1,
+      };
     case "UPDATE_CLIENTE":
       return {
         ...state,
@@ -73,6 +78,8 @@ export function ReservaProvider({ children }) {
     [],
   );
 
+  const resetReserva = useCallback(() => dispatch({ type: "RESET_FORM" }), []);
+
   const value = useMemo(
     () => ({
       state,
@@ -81,8 +88,17 @@ export function ReservaProvider({ children }) {
       setStep,
       updateForm,
       updateCliente,
+      resetReserva,
     }),
-    [state, nextStep, prevStep, setStep, updateForm, updateCliente],
+    [
+      state,
+      nextStep,
+      prevStep,
+      setStep,
+      updateForm,
+      updateCliente,
+      resetReserva,
+    ],
   );
 
   return (
