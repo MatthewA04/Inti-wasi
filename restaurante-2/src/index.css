@@ -118,6 +118,7 @@ body {
   margin: 0px;
   font-family: cinzel;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .experiencia-header {
@@ -546,4 +547,12 @@ select {
 .cargando {
   animation: spin 2s linear infinite;
   filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.5));
+}
+
+.btn-finalizar-limpiar {
+  background-color: #585858 !important;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: #fff !important;
+  padding: 10px 20px;
 }

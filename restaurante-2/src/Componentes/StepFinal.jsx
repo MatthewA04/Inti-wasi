@@ -87,7 +87,7 @@ Gracias.`;
           </li>
         </ul>
 
-        <p className="small mb-4 text-secondary">
+        <p className="small mb-4 ">
           Es importante confirmar, ya que las reservas no confirmadas serán
           liberadas automáticamente.
         </p>
@@ -127,18 +127,7 @@ Gracias.`;
           Enviar reserva por WhatsApp
         </a>
 
-        <button
-          onClick={handleFinalizar}
-          className="btn-finalizar-limpiar"
-          style={{
-            background: "transparent",
-            border: "1px solid #C5A059",
-            color: "#C5A059",
-            padding: "10px 30px",
-            cursor: "pointer",
-            transition: "all 0.3s",
-          }}
-        >
+        <button onClick={handleFinalizar} className="btn-finalizar-limpiar">
           Finalizar y Volver al Inicio
         </button>
       </div>
