@@ -9,6 +9,7 @@ const Step5Datos = memo(() => {
 
   // SEGURIDAD: Token desde variable de entorno
   const API_TOKEN = import.meta.env.VITE_API_TOKEN;
+  console.log("Mi token es:", API_TOKEN);
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
