@@ -8,27 +8,11 @@ const Step5Datos = memo(() => {
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  // Step5Datos.jsx
-
-  // Esta función es a prueba de balas porque no escribe "import.meta" directamente
-  const getEnvValue = () => {
-    const env = globalThis.process?.env || {};
-    if (env.VITE_API_TOKEN) return env.VITE_API_TOKEN;
-
-    // Para Vite en el navegador
-    try {
-      const meta = Function("return import.meta")();
-      return meta.env.VITE_API_TOKEN;
-    } catch (e) {
-      return "";
-    }
-  };
-
-  const API_TOKEN = getEnvValue();
+  // Usamos el token que viene del archivo env.js
+  const API_TOKEN = VITE_API_TOKEN;
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // Validación completa para habilitar el botón
   const formularioValido = () =>
     cliente.numeroDocumento.length >= 8 &&
     cliente.nombres.trim().length > 2 &&
@@ -39,15 +23,14 @@ const Step5Datos = memo(() => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // LÓGICA DE LIMPIEZA: Si cambia el tipo de documento, reseteamos datos sensibles
     if (name === "tipoDocumento") {
       updateCliente({
         tipoDocumento: value,
-        numeroDocumento: "", // Borra el número anterior
-        nombres: "", // Borra el nombre de la API
-        apellidos: "", // Borra los apellidos de la API
+        numeroDocumento: "",
+        nombres: "",
+        apellidos: "",
       });
-      setIsAutoFilled(false); // Permite escribir manualmente
+      setIsAutoFilled(false);
       return;
     }
 
@@ -57,8 +40,6 @@ const Step5Datos = memo(() => {
       if (name === "celular" && soloNumeros.length > 9) return;
 
       updateCliente({ [name]: soloNumeros });
-
-      // Si el usuario borra o cambia el número, quitamos el bloqueo de autocompletado
       if (name === "numeroDocumento") setIsAutoFilled(false);
     } else {
       updateCliente({ [name]: value });
@@ -67,7 +48,12 @@ const Step5Datos = memo(() => {
 
   useEffect(() => {
     const consultarDNI = async () => {
-      if (!API_TOKEN) return;
+      // Si no hay token, no intentamos la consulta
+      if (!API_TOKEN) {
+        console.warn("VITE_API_TOKEN no está configurado");
+        return;
+      }
+
       if (
         cliente.tipoDocumento === "DNI" &&
         cliente.numeroDocumento.length === 8
@@ -86,7 +72,7 @@ const Step5Datos = memo(() => {
             setIsAutoFilled(true);
           }
         } catch (e) {
-          console.error("Error API:", e);
+          console.error("Error al consultar DNI:", e);
           setIsAutoFilled(false);
         } finally {
           setLoading(false);
@@ -94,13 +80,12 @@ const Step5Datos = memo(() => {
       }
     };
     consultarDNI();
-  }, [cliente.numeroDocumento, cliente.tipoDocumento]);
+  }, [cliente.numeroDocumento, cliente.tipoDocumento, API_TOKEN]);
 
   return (
     <div className="container text-white mb-5" style={{ maxWidth: "800px" }}>
       <h2 className="mb-4 titulo-form">Datos del cliente</h2>
       <form className="row g-4">
-        {/* TIPO DE DOCUMENTO */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
             Tipo de documento
@@ -117,7 +102,6 @@ const Step5Datos = memo(() => {
           </select>
         </div>
 
-        {/* NÚMERO DE DOCUMENTO */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
             Número {loading && " (Validando...)"}
@@ -132,7 +116,6 @@ const Step5Datos = memo(() => {
           />
         </div>
 
-        {/* NOMBRES */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Nombres *</label>
           <input
@@ -146,7 +129,6 @@ const Step5Datos = memo(() => {
           />
         </div>
 
-        {/* APELLIDOS */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Apellidos *</label>
           <input
@@ -160,7 +142,6 @@ const Step5Datos = memo(() => {
           />
         </div>
 
-        {/* CORREO */}
         <div className="col-12">
           <label className="form-label small text-uppercase">Correo *</label>
           <input
@@ -173,7 +154,6 @@ const Step5Datos = memo(() => {
           />
         </div>
 
-        {/* CELULAR */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Celular *</label>
           <input
@@ -186,7 +166,6 @@ const Step5Datos = memo(() => {
           />
         </div>
 
-        {/* OCASIÓN */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Ocasión</label>
           <input
@@ -199,7 +178,6 @@ const Step5Datos = memo(() => {
           />
         </div>
 
-        {/* REQUERIMIENTOS ADICIONALES */}
         <div className="col-12">
           <label className="form-label small text-uppercase">
             Requerimientos Adicionales
@@ -213,7 +191,6 @@ const Step5Datos = memo(() => {
           ></textarea>
         </div>
 
-        {/* ALERGIAS */}
         <div className="col-12">
           <label className="form-label small text-uppercase">
             Intolerancias o Alergias
@@ -227,7 +204,6 @@ const Step5Datos = memo(() => {
           ></textarea>
         </div>
 
-        {/* BOTÓN DE ACCIÓN */}
         <div className="col-12 text-center mt-5">
           <button
             type="button"
