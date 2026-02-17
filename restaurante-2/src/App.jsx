@@ -1,6 +1,5 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import AdminReservas from "./Paginas/AdminReservas";
 
 // Lazy Loading para mantener la optimización (esto sí ayuda a tu nota)
 const Inicio = lazy(() => import("./Paginas/Inicio"));
@@ -8,6 +7,7 @@ const Contacto = lazy(() => import("./Paginas/Contacto"));
 const Historia = lazy(() => import("./Paginas/Historia"));
 const Reservas = lazy(() => import("./Paginas/Reservas"));
 const Mesas = lazy(() => import("./Paginas/Mesas"));
+const AdminReservas = lazy(() => import("./Paginas/AdminReservas"));
 
 function App() {
   return (
