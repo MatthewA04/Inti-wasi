@@ -8,7 +8,6 @@ const Step5Datos = memo(() => {
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  // Usamos el token que viene del archivo env.js
   const API_TOKEN = VITE_API_TOKEN;
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -48,35 +47,30 @@ const Step5Datos = memo(() => {
 
   useEffect(() => {
     const consultarDNI = async () => {
-      // Si no hay token, no intentamos la consulta
-      if (!API_TOKEN) {
-        console.warn("VITE_API_TOKEN no está configurado");
-        return;
-      }
-
       if (
-        cliente.tipoDocumento === "DNI" &&
-        cliente.numeroDocumento.length === 8
-      ) {
-        setLoading(true);
-        try {
-          const res = await fetch(
-            `https://apiperu.dev/api/dni/${cliente.numeroDocumento}?api_token=${API_TOKEN}`,
-          ).then((r) => r.json());
+        !API_TOKEN ||
+        cliente.tipoDocumento !== "DNI" ||
+        cliente.numeroDocumento.length !== 8
+      )
+        return;
 
-          if (res.success) {
-            updateCliente({
-              nombres: res.data.nombres,
-              apellidos: `${res.data.apellido_paterno} ${res.data.apellido_materno}`,
-            });
-            setIsAutoFilled(true);
-          }
-        } catch (e) {
-          console.error("Error al consultar DNI:", e);
-          setIsAutoFilled(false);
-        } finally {
-          setLoading(false);
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `https://apiperu.dev/api/dni/${cliente.numeroDocumento}?api_token=${API_TOKEN}`,
+        ).then((r) => r.json());
+
+        if (res.success) {
+          updateCliente({
+            nombres: res.data.nombres,
+            apellidos: `${res.data.apellido_paterno} ${res.data.apellido_materno}`,
+          });
+          setIsAutoFilled(true);
         }
+      } catch (e) {
+        console.error("Error API:", e);
+      } finally {
+        setLoading(false);
       }
     };
     consultarDNI();
@@ -101,7 +95,6 @@ const Step5Datos = memo(() => {
             <option value="Carnet Ext.">Carnet Ext.</option>
           </select>
         </div>
-
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
             Número {loading && " (Validando...)"}
@@ -115,7 +108,6 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
-
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Nombres *</label>
           <input
@@ -128,7 +120,6 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
-
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Apellidos *</label>
           <input
@@ -141,7 +132,6 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
-
         <div className="col-12">
           <label className="form-label small text-uppercase">Correo *</label>
           <input
@@ -153,7 +143,6 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
-
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Celular *</label>
           <input
@@ -165,7 +154,6 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
-
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Ocasión</label>
           <input
@@ -177,33 +165,6 @@ const Step5Datos = memo(() => {
             placeholder="Ej: Aniversario"
           />
         </div>
-
-        <div className="col-12">
-          <label className="form-label small text-uppercase">
-            Requerimientos Adicionales
-          </label>
-          <textarea
-            className="form-control input-datos"
-            rows="2"
-            name="requerimientos"
-            value={cliente.requerimientos}
-            onChange={handleChange}
-          ></textarea>
-        </div>
-
-        <div className="col-12">
-          <label className="form-label small text-uppercase">
-            Intolerancias o Alergias
-          </label>
-          <textarea
-            className="form-control input-datos"
-            rows="2"
-            name="alergias"
-            value={cliente.alergias}
-            onChange={handleChange}
-          ></textarea>
-        </div>
-
         <div className="col-12 text-center mt-5">
           <button
             type="button"
