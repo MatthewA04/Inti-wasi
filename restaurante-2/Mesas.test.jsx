@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ReservaProvider } from "./src/Data/ReservaContext";
+import { ReservaProvider } from "./Data/ReservaContext";
 import Mesas from "./Paginas/Mesas";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom";

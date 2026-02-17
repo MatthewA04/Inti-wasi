@@ -1,5 +1,5 @@
 import { useEffect, useState, memo } from "react";
-import { useReserva } from "../Data/ReservaContext";
+import { useReserva } from "../../Data/ReservaContext";
 import { useNavigate } from "react-router-dom";
 
 const StepFinal = memo(() => {

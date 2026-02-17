@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../Media/Footer_intiwasi.png";
+import logo from "/Media/Footer_intiwasi.png";
 
 const LoadingSpinner = () => {
   return (
