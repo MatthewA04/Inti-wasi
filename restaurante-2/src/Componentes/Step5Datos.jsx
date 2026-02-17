@@ -23,13 +23,35 @@ const Step5Datos = memo(() => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // 1. Lógica para limpiar datos al cambiar tipo de documento
+    if (name === "tipoDocumento") {
+      updateCliente({
+        tipoDocumento: value,
+        numeroDocumento: "", // Se borra el número previo
+        nombres: "", // Se borra el nombre autocompletado
+        apellidos: "", // Se borran los apellidos
+      });
+      setIsAutoFilled(false); // Desbloquea los campos para escritura manual
+      return;
+    }
+
+    // 2. Lógica para números (DNI o Celular)
     if (name === "numeroDocumento" || name === "celular") {
       const soloNumeros = value.replace(/\D/g, "");
+
+      // Validaciones de longitud máxima
       if (name === "numeroDocumento" && soloNumeros.length > 12) return;
       if (name === "celular" && soloNumeros.length > 9) return;
+
       updateCliente({ [name]: soloNumeros });
-      if (name === "numeroDocumento") setIsAutoFilled(false);
+
+      // Si el usuario empieza a borrar el número manualmente, desbloqueamos nombres
+      if (name === "numeroDocumento") {
+        setIsAutoFilled(false);
+      }
     } else {
+      // 3. Lógica para el resto de campos (correo, ocasión, etc.)
       updateCliente({ [name]: value });
     }
   };
