@@ -2,7 +2,14 @@ import { useEffect, useState, Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import LoadingSpinner from "./Componentes/Carga";
 
-// Lazy Loading para optimización avanzada
+// 1. IMPORTAMOS LAS IMÁGENES (Esto soluciona el 404)
+import logo from "./Media/logo-oscuro.png";
+import altiplano from "./Media/Sabores-del-Altiplano.png";
+import hero from "./Media/hero-bg.jpg";
+import banner from "./Media/banner.png";
+import lateral from "./Media/imagen-reserva-lateral.png";
+
+// Lazy Loading
 const Inicio = lazy(() => import("./Paginas/Inicio"));
 const Contacto = lazy(() => import("./Paginas/Contacto"));
 const Historia = lazy(() => import("./Paginas/Historia"));
@@ -13,13 +20,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const imagenesCriticas = [
-      "/Media/hero-bg.jpg",
-      "/Media/Sabores-del-Altiplano.png",
-      "/Media/logo-oscuro.png",
-      "/Media/banner.png",
-      "/Media/imagen-reserva-lateral.png",
-    ];
+    // 2. Usamos las variables importadas, no strings de texto
+    const imagenesCriticas = [logo, altiplano, hero, banner, lateral];
 
     const precargarImagenes = (urls) => {
       const promesas = urls.map((url) => {
@@ -27,7 +29,7 @@ function App() {
           const img = new Image();
           img.src = url;
           img.onload = resolve;
-          img.onerror = resolve;
+          img.onerror = resolve; // Si una falla, resolvemos igual para no trabar la web
         });
       });
       return Promise.all(promesas);
