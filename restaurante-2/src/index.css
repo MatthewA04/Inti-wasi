@@ -168,7 +168,7 @@ a:hover {
 }
 
 .formulario-1 {
-  background-image: url(/src/Media/formulario.png);
+  background-image: url(./Media/formulario.png);
   padding-top: 6.9rem;
   padding-bottom: 3rem;
   display: flex;

@@ -1,7 +1,7 @@
 import Header from "../Componentes/HeaderComponente.jsx";
 import Footer from "../Componentes/FooterComponente.jsx";
 import ExperienciasAcordion from "../Componentes/ExperienciaAcordion.jsx";
-import bannerlateral from "../Media/imagen-reserva-lateral.png";
+import bannerlateral from "/Media/imagen-reserva-lateral.png";
 import { Outlet, Link } from "react-router-dom";
 
 function Reservas() {
