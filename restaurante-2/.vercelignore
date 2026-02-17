@@ -1,0 +1,5 @@
+**/*.test.jsx
+jest.config.cjs
+jest.setup.js
+babel.config.json
+fileMocks.js
