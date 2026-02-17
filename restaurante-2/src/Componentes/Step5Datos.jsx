@@ -1,5 +1,6 @@
 import { useState, useEffect, memo } from "react";
 import { useReserva } from "../Data/ReservaContext.jsx";
+import { VITE_API_TOKEN } from "../env.js";
 
 const Step5Datos = memo(() => {
   const { state, updateCliente, nextStep } = useReserva();
@@ -7,9 +8,23 @@ const Step5Datos = memo(() => {
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  // SEGURIDAD: Token desde variable de entorno
-  const API_TOKEN = import.meta.env.VITE_API_TOKEN;
-  console.log("Variables cargadas:", import.meta.env);
+  // Step5Datos.jsx
+
+  // Esta función es a prueba de balas porque no escribe "import.meta" directamente
+  const getEnvValue = () => {
+    const env = globalThis.process?.env || {};
+    if (env.VITE_API_TOKEN) return env.VITE_API_TOKEN;
+
+    // Para Vite en el navegador
+    try {
+      const meta = Function("return import.meta")();
+      return meta.env.VITE_API_TOKEN;
+    } catch (e) {
+      return "";
+    }
+  };
+
+  const API_TOKEN = getEnvValue();
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 

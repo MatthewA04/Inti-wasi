@@ -1,6 +1,12 @@
+jest.mock("./Componentes/Step5Datos", () => {
+  return function MockStep5() {
+    return <div data-testid="mock-step5">Mock de Step 5</div>;
+  };
+});
+
 import { render, screen } from "@testing-library/react";
-import { ReservaProvider } from "./Data/ReservaContext";
-import Mesas from "./Paginas/Mesas";
+import { ReservaProvider } from "./Data/ReservaContext.jsx";
+import Mesas from "./Paginas/Mesas.jsx";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom";
 
