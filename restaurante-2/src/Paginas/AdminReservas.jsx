@@ -1,35 +1,36 @@
-import React, { useState } from "react";
-import { useReserva } from "../Data/ReservaContext";
+import React, { useState, useEffect } from "react";
 import "./AdminReservas.css";
 
 const AdminReservas = () => {
-  const { state } = useReserva();
-
-  // Estado para controlar qué filas están confirmadas o canceladas localmente
+  const [reservas, setReservas] = useState([]);
   const [estadosFilas, setEstadosFilas] = useState({});
 
-  const manejarEstado = (index, nuevoEstado) => {
+  // Cargar datos al montar el componente
+  useEffect(() => {
+    const datosGuardados = localStorage.getItem("db_reservas");
+    if (datosGuardados) {
+      setReservas(JSON.parse(datosGuardados));
+    }
+  }, []);
+
+  const manejarEstado = (id, nuevoEstado) => {
     setEstadosFilas({
       ...estadosFilas,
-      [index]: nuevoEstado,
+      [id]: nuevoEstado,
     });
   };
-
-  // Obtenemos la lista de reservas del contexto.
-  // Si state.reservasRealizadas no existe, mostramos al menos la reserva actual.
-  const listaReservas =
-    state.reservasRealizadas || (state.cliente?.nombre ? [state] : []);
 
   return (
     <div className="admin-container">
       <h1 className="admin-title">Panel de Control: /reservaslistas</h1>
 
-      {listaReservas.length === 0 ? (
-        <p>No hay reservas registradas actualmente.</p>
+      {reservas.length === 0 ? (
+        <p className="text-white">No hay reservas registradas en el sistema.</p>
       ) : (
         <table className="reservas-table">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Cliente</th>
               <th>Contacto</th>
               <th>Fecha y Hora</th>
@@ -39,8 +40,8 @@ const AdminReservas = () => {
             </tr>
           </thead>
           <tbody>
-            {listaReservas.map((res, index) => {
-              const status = estadosFilas[index];
+            {reservas.map((res) => {
+              const status = estadosFilas[res.id];
               const claseFila =
                 status === "cancelada"
                   ? "fila-cancelada"
@@ -49,14 +50,21 @@ const AdminReservas = () => {
                     : "";
 
               return (
-                <tr key={index} className={claseFila}>
+                <tr key={res.id} className={claseFila}>
                   <td>
-                    <strong>{res.cliente?.nombre}</strong>
+                    <small>{res.id}</small>
                   </td>
                   <td>
-                    {res.cliente?.telefono}
+                    {/* Corregido: nombres y apellidos en lugar de nombre */}
+                    <strong>
+                      {res.cliente?.nombres} {res.cliente?.apellidos}
+                    </strong>
+                  </td>
+                  <td>
+                    {/* Corregido: celular y correo en lugar de telefono y email */}
+                    {res.cliente?.celular}
                     <br />
-                    <small>{res.cliente?.email}</small>
+                    <small>{res.cliente?.correo}</small>
                   </td>
                   <td>
                     {res.fecha} a las {res.hora}
@@ -66,15 +74,15 @@ const AdminReservas = () => {
                   <td>
                     <button
                       className="btn-confirmar"
-                      onClick={() => manejarEstado(index, "confirmada")}
+                      onClick={() => manejarEstado(res.id, "confirmada")}
                     >
-                      Mesa Confirmada
+                      Confirmar
                     </button>
                     <button
                       className="btn-cancelar"
-                      onClick={() => manejarEstado(index, "cancelada")}
+                      onClick={() => manejarEstado(res.id, "cancelada")}
                     >
-                      Mesa Cancelada
+                      Cancelar
                     </button>
                   </td>
                 </tr>
