@@ -3,22 +3,46 @@ import "./AdminReservas.css";
 
 const AdminReservas = () => {
   const [reservas, setReservas] = useState([]);
-  const [estadosFilas, setEstadosFilas] = useState({});
+  // El estado de confirmación ahora se manejará dentro del objeto de la reserva
+  const [cargando, setCargando] = useState(true);
 
-  // Cargar datos al montar el componente
   useEffect(() => {
-    const datosGuardados = localStorage.getItem("db_reservas");
-    if (datosGuardados) {
-      setReservas(JSON.parse(datosGuardados));
-    }
+    const cargarDatos = () => {
+      const datosGuardados = localStorage.getItem("db_reservas");
+      if (datosGuardados) {
+        setReservas(JSON.parse(datosGuardados));
+      }
+      setCargando(false);
+    };
+    cargarDatos();
   }, []);
 
-  const manejarEstado = (id, nuevoEstado) => {
-    setEstadosFilas({
-      ...estadosFilas,
-      [id]: nuevoEstado,
+  const actualizarEstadoReserva = (id, nuevoEstado) => {
+    // 1. Actualizamos la lista en el estado de React
+    const nuevasReservas = reservas.map((res) => {
+      if (res.id === id) {
+        return { ...res, estadoAdmin: nuevoEstado };
+      }
+      return res;
     });
+
+    setReservas(nuevasReservas);
+
+    // 2. Guardamos la lista actualizada en localStorage para que persista al refrescar
+    localStorage.setItem("db_reservas", JSON.stringify(nuevasReservas));
+
+    // 3. Lanzamos la alerta que pediste
+    alert(
+      `Reserva ${nuevoEstado === "confirmada" ? "CONFIRMADA" : "CANCELADA"} con éxito`,
+    );
   };
+
+  if (cargando)
+    return (
+      <div className="admin-container">
+        <p className="text-white">Cargando...</p>
+      </div>
+    );
 
   return (
     <div className="admin-container">
@@ -41,7 +65,8 @@ const AdminReservas = () => {
           </thead>
           <tbody>
             {reservas.map((res) => {
-              const status = estadosFilas[res.id];
+              // Leemos el estado directamente de la propiedad del objeto
+              const status = res.estadoAdmin;
               const claseFila =
                 status === "cancelada"
                   ? "fila-cancelada"
@@ -55,13 +80,11 @@ const AdminReservas = () => {
                     <small>{res.id}</small>
                   </td>
                   <td>
-                    {/* Corregido: nombres y apellidos en lugar de nombre */}
                     <strong>
                       {res.cliente?.nombres} {res.cliente?.apellidos}
                     </strong>
                   </td>
                   <td>
-                    {/* Corregido: celular y correo en lugar de telefono y email */}
                     {res.cliente?.celular}
                     <br />
                     <small>{res.cliente?.correo}</small>
@@ -74,15 +97,21 @@ const AdminReservas = () => {
                   <td>
                     <button
                       className="btn-confirmar"
-                      onClick={() => manejarEstado(res.id, "confirmada")}
+                      onClick={() =>
+                        actualizarEstadoReserva(res.id, "confirmada")
+                      }
+                      disabled={status === "confirmada"}
                     >
-                      Confirmar
+                      {status === "confirmada" ? "Confirmada" : "Confirmar"}
                     </button>
                     <button
                       className="btn-cancelar"
-                      onClick={() => manejarEstado(res.id, "cancelada")}
+                      onClick={() =>
+                        actualizarEstadoReserva(res.id, "cancelada")
+                      }
+                      disabled={status === "cancelada"}
                     >
-                      Cancelar
+                      {status === "cancelada" ? "Cancelada" : "Cancelar"}
                     </button>
                   </td>
                 </tr>
