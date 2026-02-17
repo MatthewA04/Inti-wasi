@@ -1,6 +1,6 @@
-import footerImg from "/Media/Footer_intiwasi.png";
-import facebookImg from "/Media/Facebook.png";
-import instagramImg from "/Media/Instagram.png";
+import footerImg from "../Media/Footer_intiwasi.png";
+import facebookImg from "../Media/Facebook.png";
+import instagramImg from "../Media/Instagram.png";
 import "./FooterComponente.css";
 
 export default function Footer() {

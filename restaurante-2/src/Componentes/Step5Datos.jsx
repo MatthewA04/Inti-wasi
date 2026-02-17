@@ -7,14 +7,16 @@ const Step5Datos = memo(() => {
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  const API_TOKEN =
-    "ed409cdc72ba2d196dd42fd8f957877655ecf0f3eb4b7650e634166357c74944";
+  // SEGURIDAD: Token desde variable de entorno
+  const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  // Validación completa para habilitar el botón
   const formularioValido = () =>
     cliente.numeroDocumento.length >= 8 &&
     cliente.nombres.trim().length > 2 &&
+    cliente.apellidos.trim().length > 2 &&
     validarEmail(cliente.correo) &&
     cliente.celular.length >= 9;
 
@@ -33,6 +35,7 @@ const Step5Datos = memo(() => {
 
   useEffect(() => {
     const consultarDNI = async () => {
+      if (!API_TOKEN) return;
       if (
         cliente.tipoDocumento === "DNI" &&
         cliente.numeroDocumento.length === 8
@@ -42,6 +45,7 @@ const Step5Datos = memo(() => {
           const res = await fetch(
             `https://apiperu.dev/api/dni/${cliente.numeroDocumento}?api_token=${API_TOKEN}`,
           ).then((r) => r.json());
+
           if (res.success) {
             updateCliente({
               nombres: res.data.nombres,
@@ -50,19 +54,21 @@ const Step5Datos = memo(() => {
             setIsAutoFilled(true);
           }
         } catch (e) {
-          console.error(e);
+          console.error("Error API:", e);
+          setIsAutoFilled(false);
         } finally {
           setLoading(false);
         }
       }
     };
     consultarDNI();
-  }, [cliente.numeroDocumento, cliente.tipoDocumento, updateCliente]);
+  }, [cliente.numeroDocumento, cliente.tipoDocumento]);
 
   return (
     <div className="container text-white mb-5" style={{ maxWidth: "800px" }}>
       <h2 className="mb-4 titulo-form">Datos del cliente</h2>
       <form className="row g-4">
+        {/* TIPO DE DOCUMENTO */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
             Tipo de documento
@@ -78,9 +84,11 @@ const Step5Datos = memo(() => {
             <option value="Carnet Ext.">Carnet Ext.</option>
           </select>
         </div>
+
+        {/* NÚMERO DE DOCUMENTO */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
-            Número {loading && "..."}
+            Número {loading && " (Validando...)"}
           </label>
           <input
             type="text"
@@ -91,6 +99,8 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
+
+        {/* NOMBRES */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Nombres *</label>
           <input
@@ -103,6 +113,8 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
+
+        {/* APELLIDOS */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Apellidos *</label>
           <input
@@ -115,6 +127,8 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
+
+        {/* CORREO */}
         <div className="col-12">
           <label className="form-label small text-uppercase">Correo *</label>
           <input
@@ -126,6 +140,8 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
+
+        {/* CELULAR */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Celular *</label>
           <input
@@ -137,6 +153,8 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
+
+        {/* OCASIÓN */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">Ocasión</label>
           <input
@@ -145,8 +163,11 @@ const Step5Datos = memo(() => {
             name="ocasion"
             value={cliente.ocasion}
             onChange={handleChange}
+            placeholder="Ej: Aniversario"
           />
         </div>
+
+        {/* REQUERIMIENTOS ADICIONALES */}
         <div className="col-12">
           <label className="form-label small text-uppercase">
             Requerimientos Adicionales
@@ -159,6 +180,8 @@ const Step5Datos = memo(() => {
             onChange={handleChange}
           ></textarea>
         </div>
+
+        {/* ALERGIAS */}
         <div className="col-12">
           <label className="form-label small text-uppercase">
             Intolerancias o Alergias
@@ -171,6 +194,8 @@ const Step5Datos = memo(() => {
             onChange={handleChange}
           ></textarea>
         </div>
+
+        {/* BOTÓN DE ACCIÓN */}
         <div className="col-12 text-center mt-5">
           <button
             type="button"

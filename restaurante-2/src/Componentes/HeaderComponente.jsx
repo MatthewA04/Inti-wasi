@@ -1,5 +1,5 @@
-import headerImg from "/Media/inti-wasi-header.png";
-import globalImg from "/Media/Global.png";
+import headerImg from "../Media/inti-wasi-header.png";
+import globalImg from "../Media/Global.png";
 import "./HeaderComponente.css";
 import { Link } from "react-router-dom";
 
