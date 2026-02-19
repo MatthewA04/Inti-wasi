@@ -8,7 +8,12 @@ const Step5Datos = memo(() => {
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  const API_TOKEN = VITE_API_TOKEN || import.meta.env.VITE_API_TOKEN;
+  // LOG 1: Verificar si el token se está cargando correctamente desde env.js
+  console.log("DEBUG - Token actual:", VITE_API_TOKEN);
+  // LOG 2: Verificar el estado del cliente en cada render
+  console.log("DEBUG - Estado del cliente:", cliente);
+
+  const API_TOKEN = VITE_API_TOKEN;
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -21,6 +26,7 @@ const Step5Datos = memo(() => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(`DEBUG - Cambiando campo: ${name} con valor: ${value}`);
 
     if (name === "tipoDocumento") {
       updateCliente({
@@ -51,14 +57,22 @@ const Step5Datos = memo(() => {
         !API_TOKEN ||
         cliente.tipoDocumento !== "DNI" ||
         cliente.numeroDocumento.length !== 8
-      )
+      ) {
+        if (!API_TOKEN) console.warn("DEBUG - No hay API_TOKEN configurado");
         return;
+      }
 
       setLoading(true);
+      console.log(
+        "DEBUG - Iniciando petición API para DNI:",
+        cliente.numeroDocumento,
+      );
+
       try {
-        const res = await fetch(
-          `https://apiperu.dev/api/dni/${cliente.numeroDocumento}?api_token=${API_TOKEN}`,
-        ).then((r) => r.json());
+        const url = `https://apiperu.dev/api/dni/${cliente.numeroDocumento}?api_token=${API_TOKEN}`;
+        const res = await fetch(url).then((r) => r.json());
+
+        console.log("DEBUG - Respuesta de API Peru:", res);
 
         if (res.success) {
           updateCliente({
@@ -66,9 +80,14 @@ const Step5Datos = memo(() => {
             apellidos: `${res.data.apellido_paterno} ${res.data.apellido_materno}`,
           });
           setIsAutoFilled(true);
+        } else {
+          console.error(
+            "DEBUG - API falló pero respondió:",
+            res.message || "Error desconocido",
+          );
         }
       } catch (e) {
-        console.error("Error API:", e);
+        console.error("DEBUG - Error de red o CORS en API:", e);
       } finally {
         setLoading(false);
       }
@@ -165,7 +184,7 @@ const Step5Datos = memo(() => {
             placeholder="Ej: Aniversario"
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-12">
           <label className="form-label small text-uppercase">
             Alergias o Intolerancias
           </label>
@@ -178,7 +197,7 @@ const Step5Datos = memo(() => {
             placeholder="Ej: Celíaco, alergia a los mariscos..."
           ></textarea>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-12">
           <label className="form-label small text-uppercase">
             Requerimientos Adicionales
           </label>
