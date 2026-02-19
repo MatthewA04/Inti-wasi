@@ -50,5 +50,5 @@ const Step4Hora = memo(() => {
     </div>
   );
 });
-
+Step4Hora.displayName = "Step4Hora";
 export default Step4Hora;

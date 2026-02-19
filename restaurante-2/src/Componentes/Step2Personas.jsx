@@ -30,5 +30,5 @@ const Step2Personas = memo(() => {
     </>
   );
 });
-
+Step2Personas.displayName = "Step2Personas";
 export default Step2Personas;

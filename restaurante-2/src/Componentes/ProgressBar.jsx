@@ -77,5 +77,5 @@ const ProgressBar = memo(() => {
     </div>
   );
 });
-
+ProgressBar.displayName = "Progreso Barra";
 export default ProgressBar;

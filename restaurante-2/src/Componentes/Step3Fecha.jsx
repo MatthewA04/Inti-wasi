@@ -121,5 +121,5 @@ const Step3Fecha = memo(() => {
     </div>
   );
 });
-
+Step3Fecha.displayName = "Step3Fecha";
 export default Step3Fecha;

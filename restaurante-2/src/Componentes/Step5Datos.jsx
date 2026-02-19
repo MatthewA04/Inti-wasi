@@ -67,7 +67,6 @@ const Step5Datos = memo(() => {
           setIsAutoFilled(true);
         }
       } catch (e) {
-        // Error silenciado para producción
       } finally {
         setLoading(false);
       }
@@ -204,5 +203,5 @@ const Step5Datos = memo(() => {
     </div>
   );
 });
-
+Step5Datos.displayName = "Step5Datos";
 export default Step5Datos;

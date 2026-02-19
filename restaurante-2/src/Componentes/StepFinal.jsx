@@ -134,5 +134,5 @@ Gracias.`;
     </div>
   );
 });
-
+StepFinal.displayName = "StepFinal";
 export default StepFinal;
