@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./MaintenancePage.css";
 
-const MaintenancePage = () => {
+const MantenimientoPage = () => {
   const navigate = useNavigate();
 
   return (
