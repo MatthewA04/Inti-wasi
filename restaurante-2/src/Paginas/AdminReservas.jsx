@@ -3,7 +3,6 @@ import "./AdminReservas.css";
 
 const AdminReservas = () => {
   const [reservas, setReservas] = useState([]);
-  // El estado de confirmación ahora se manejará dentro del objeto de la reserva
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
@@ -18,7 +17,6 @@ const AdminReservas = () => {
   }, []);
 
   const actualizarEstadoReserva = (id, nuevoEstado) => {
-    // 1. Actualizamos la lista en el estado de React
     const nuevasReservas = reservas.map((res) => {
       if (res.id === id) {
         return { ...res, estadoAdmin: nuevoEstado };
@@ -28,10 +26,8 @@ const AdminReservas = () => {
 
     setReservas(nuevasReservas);
 
-    // 2. Guardamos la lista actualizada en localStorage para que persista al refrescar
     localStorage.setItem("db_reservas", JSON.stringify(nuevasReservas));
 
-    // 3. Lanzamos la alerta que pediste
     alert(
       `Reserva ${nuevoEstado === "confirmada" ? "CONFIRMADA" : "CANCELADA"} con éxito`,
     );
@@ -46,7 +42,7 @@ const AdminReservas = () => {
 
   return (
     <div className="admin-container">
-      <h1 className="admin-title">Panel de Control: /reservaslistas</h1>
+      <h1 className="admin-title">Panel de Control:</h1>
 
       {reservas.length === 0 ? (
         <p className="text-white">No hay reservas registradas en el sistema.</p>
@@ -65,7 +61,6 @@ const AdminReservas = () => {
           </thead>
           <tbody>
             {reservas.map((res) => {
-              // Leemos el estado directamente de la propiedad del objeto
               const status = res.estadoAdmin;
               const claseFila =
                 status === "cancelada"
