@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import MantenimientoPage from "./Componentes/MantenimientoPage";
+import MantenimientoPage from "./Componentes/MantenimientoPage.jsx";
 
 // Lazy Loading para mantener la optimización (esto sí ayuda a tu nota)
 const Inicio = lazy(() => import("./Paginas/Inicio"));
