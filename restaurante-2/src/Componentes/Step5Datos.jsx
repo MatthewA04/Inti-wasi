@@ -2,16 +2,13 @@ import { useState, useEffect, memo } from "react";
 import { useReserva } from "../Data/ReservaContext.jsx";
 import { VITE_API_TOKEN } from "../env.js";
 
-console.log("TEST CONEXIÓN - ¿Llega el token al componente?:", VITE_API_TOKEN);
-
 const Step5Datos = memo(() => {
   const { state, updateCliente, nextStep } = useReserva();
   const { cliente } = state.formData;
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  // Intentamos obtener el token de env.js o directamente de Vite
-  const API_TOKEN = VITE_API_TOKEN || import.meta.env.VITE_API_TOKEN;
+  const API_TOKEN = VITE_API_TOKEN;
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -49,7 +46,6 @@ const Step5Datos = memo(() => {
 
   useEffect(() => {
     const consultarDNI = async () => {
-      // Verificamos que el token exista antes de disparar la petición
       if (
         !API_TOKEN ||
         cliente.tipoDocumento !== "DNI" ||
@@ -71,7 +67,7 @@ const Step5Datos = memo(() => {
           setIsAutoFilled(true);
         }
       } catch (e) {
-        console.error("Error en validación DNI:", e);
+        // Error silenciado para producción
       } finally {
         setLoading(false);
       }
@@ -83,7 +79,6 @@ const Step5Datos = memo(() => {
     <div className="container text-white mb-5" style={{ maxWidth: "800px" }}>
       <h2 className="mb-4 titulo-form">Datos del cliente</h2>
       <form className="row g-4">
-        {/* Campos de Documento y Nombre */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
             Tipo de documento
@@ -136,7 +131,6 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
-        {/* Correo y Celular */}
         <div className="col-12">
           <label className="form-label small text-uppercase">Correo *</label>
           <input
@@ -170,9 +164,7 @@ const Step5Datos = memo(() => {
             placeholder="Ej: Aniversario"
           />
         </div>
-
-        {/* --- REINCORPORACIÓN DE CAMPOS --- */}
-        <div className="col-md-6">
+        <div className="col-md-12">
           <label className="form-label small text-uppercase">
             Alergias o Intolerancias
           </label>
@@ -185,7 +177,7 @@ const Step5Datos = memo(() => {
             placeholder="¿Alguna restricción alimentaria?"
           ></textarea>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-12">
           <label className="form-label small text-uppercase">
             Requerimientos Especiales
           </label>
@@ -198,7 +190,6 @@ const Step5Datos = memo(() => {
             placeholder="Ej: Silla alta, mesa tranquila..."
           ></textarea>
         </div>
-
         <div className="col-12 text-center mt-5">
           <button
             type="button"
