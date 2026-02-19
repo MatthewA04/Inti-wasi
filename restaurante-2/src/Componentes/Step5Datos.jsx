@@ -2,6 +2,8 @@ import { useState, useEffect, memo } from "react";
 import { useReserva } from "../Data/ReservaContext.jsx";
 import { VITE_API_TOKEN } from "../env.js";
 
+console.log("TEST CONEXIÓN - ¿Llega el token al componente?:", VITE_API_TOKEN);
+
 const Step5Datos = memo(() => {
   const { state, updateCliente, nextStep } = useReserva();
   const { cliente } = state.formData;

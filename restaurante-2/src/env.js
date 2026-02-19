@@ -1,5 +1,1 @@
-// src/env.js
-export const VITE_API_TOKEN = 
-  import.meta.env?.VITE_API_TOKEN || 
-  (typeof globalThis !== 'undefined' && globalThis.process?.env?.VITE_API_TOKEN) || 
-  '';
+VITE_API_TOKEN=ed409cdc72ba2d196dd42fd8f957877655ecf0f3eb4b7650e634166357c74944
