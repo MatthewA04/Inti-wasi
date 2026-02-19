@@ -8,7 +8,7 @@ const Step5Datos = memo(() => {
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  const API_TOKEN = VITE_API_TOKEN;
+  const API_TOKEN = VITE_API_TOKEN || import.meta.env.VITE_API_TOKEN;
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -164,6 +164,32 @@ const Step5Datos = memo(() => {
             onChange={handleChange}
             placeholder="Ej: Aniversario"
           />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label small text-uppercase">
+            Alergias o Intolerancias
+          </label>
+          <textarea
+            className="form-control input-datos"
+            name="alergias"
+            rows="2"
+            value={cliente.alergias}
+            onChange={handleChange}
+            placeholder="Ej: Celíaco, alergia a los mariscos..."
+          ></textarea>
+        </div>
+        <div className="col-md-6">
+          <label className="form-label small text-uppercase">
+            Requerimientos Adicionales
+          </label>
+          <textarea
+            className="form-control input-datos"
+            name="requerimientos"
+            rows="2"
+            value={cliente.requerimientos}
+            onChange={handleChange}
+            placeholder="Ej: Silla para bebé, mesa cerca a la ventana..."
+          ></textarea>
         </div>
         <div className="col-12 text-center mt-5">
           <button
