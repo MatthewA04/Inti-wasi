@@ -33,11 +33,11 @@ function Inicio() {
         </article>
 
         {/* Sección del Chef corregida */}
-        <div className="container py-5 text-white">
+        <div className="container py-5 ">
           <div className="row align-items-center g-5">
             <div className="col-lg-7">
               <div className="pe-lg-4">
-                <h2 className="display-5 fw-bold mb-4 text-warning">
+                <h2 className="display-5 fw-bold mb-4 texto">
                   Nuestro Chef Ejecutivo
                 </h2>
 
@@ -71,7 +71,7 @@ function Inicio() {
             <div className="col-lg-5 text-center">
               <div className="position-relative d-inline-block">
                 <img
-                  src={Chef} // Usamos la variable importada arriba
+                  src={Chef}
                   alt="Chef Diego Aramís"
                   className="img-fluid rounded-5 shadow-lg"
                   style={{
@@ -80,10 +80,6 @@ function Inicio() {
                     maxHeight: "500px",
                   }}
                 />
-                <div
-                  className="position-absolute top-0 start-0 w-100 h-100 border border-warning rounded-5 mt-3 ms-3"
-                  style={{ zIndex: "-1" }}
-                ></div>
               </div>
             </div>
           </div>
