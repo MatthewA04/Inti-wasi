@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+import MantenimientoPage from "./Componentes/MantenimientoPage";
 
 // Lazy Loading para mantener la optimización (esto sí ayuda a tu nota)
 const Inicio = lazy(() => import("./Paginas/Inicio"));
@@ -30,8 +31,8 @@ function App() {
     >
       <Routes>
         <Route path="/" element={<Inicio />} />
-        <Route path="/contacto" element={<Contacto />} />
-        <Route path="/historia" element={<Historia />} />
+        <Route path="/contacto" element={<MantenimientoPage />} />
+        <Route path="/historia" element={<MantenimientoPage />} />
         <Route path="/reservas" element={<Reservas />} />
         <Route path="/mesas" element={<Mesas />} />
         <Route path="/reservaslistas" element={<AdminReservas />} />

@@ -1,0 +1,76 @@
+.maintenance-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #121212;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+}
+
+.chef-icon {
+  font-size: 6rem;
+  display: inline-block;
+  animation: cookingBounce 2s infinite ease-in-out;
+}
+
+.maintenance-title {
+  color: #ffc107;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-top: 20px;
+  text-shadow: 2px 2px 15px rgba(255, 193, 7, 0.2);
+}
+
+.maintenance-text {
+  color: #a0a0a0;
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+}
+
+.cooking-pot {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ffc107;
+  border-top: 5px solid transparent;
+  border-radius: 50%;
+  animation: spinPot 1s linear infinite;
+  margin: 20px auto;
+}
+
+.btn-return {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  background: transparent;
+  padding: 12px 30px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-return:hover {
+  background-color: #ffffff;
+  color: #121212;
+  transform: scale(1.05);
+}
+
+@keyframes cookingBounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(10deg);
+  }
+}
+
+@keyframes spinPot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
