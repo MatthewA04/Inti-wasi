@@ -359,6 +359,7 @@ a:hover {
   font-size: 1.5rem;
   line-height: 1;
   transition: 0.3s;
+  color: #fff;
 }
 
 .flecha-circular:hover {
