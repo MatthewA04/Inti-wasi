@@ -31,5 +31,5 @@ const Step1Experiencias = memo(() => {
     </div>
   );
 });
-
+Step1Experiencias.displayName = "Step1Experiencias";
 export default Step1Experiencias;
