@@ -8,12 +8,8 @@ const Step5Datos = memo(() => {
   const [loading, setLoading] = useState(false);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
-  // LOG 1: Verificar si el token se está cargando correctamente desde env.js
-  console.log("DEBUG - Token actual:", VITE_API_TOKEN);
-  // LOG 2: Verificar el estado del cliente en cada render
-  console.log("DEBUG - Estado del cliente:", cliente);
-
-  const API_TOKEN = VITE_API_TOKEN;
+  // Intentamos obtener el token de env.js o directamente de Vite
+  const API_TOKEN = VITE_API_TOKEN || import.meta.env.VITE_API_TOKEN;
 
   const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -26,7 +22,6 @@ const Step5Datos = memo(() => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(`DEBUG - Cambiando campo: ${name} con valor: ${value}`);
 
     if (name === "tipoDocumento") {
       updateCliente({
@@ -43,7 +38,6 @@ const Step5Datos = memo(() => {
       const soloNumeros = value.replace(/\D/g, "");
       if (name === "numeroDocumento" && soloNumeros.length > 12) return;
       if (name === "celular" && soloNumeros.length > 9) return;
-
       updateCliente({ [name]: soloNumeros });
       if (name === "numeroDocumento") setIsAutoFilled(false);
     } else {
@@ -53,26 +47,19 @@ const Step5Datos = memo(() => {
 
   useEffect(() => {
     const consultarDNI = async () => {
+      // Verificamos que el token exista antes de disparar la petición
       if (
         !API_TOKEN ||
         cliente.tipoDocumento !== "DNI" ||
         cliente.numeroDocumento.length !== 8
-      ) {
-        if (!API_TOKEN) console.warn("DEBUG - No hay API_TOKEN configurado");
+      )
         return;
-      }
 
       setLoading(true);
-      console.log(
-        "DEBUG - Iniciando petición API para DNI:",
-        cliente.numeroDocumento,
-      );
-
       try {
-        const url = `https://apiperu.dev/api/dni/${cliente.numeroDocumento}?api_token=${API_TOKEN}`;
-        const res = await fetch(url).then((r) => r.json());
-
-        console.log("DEBUG - Respuesta de API Peru:", res);
+        const res = await fetch(
+          `https://apiperu.dev/api/dni/${cliente.numeroDocumento}?api_token=${API_TOKEN}`,
+        ).then((r) => r.json());
 
         if (res.success) {
           updateCliente({
@@ -80,14 +67,9 @@ const Step5Datos = memo(() => {
             apellidos: `${res.data.apellido_paterno} ${res.data.apellido_materno}`,
           });
           setIsAutoFilled(true);
-        } else {
-          console.error(
-            "DEBUG - API falló pero respondió:",
-            res.message || "Error desconocido",
-          );
         }
       } catch (e) {
-        console.error("DEBUG - Error de red o CORS en API:", e);
+        console.error("Error en validación DNI:", e);
       } finally {
         setLoading(false);
       }
@@ -99,6 +81,7 @@ const Step5Datos = memo(() => {
     <div className="container text-white mb-5" style={{ maxWidth: "800px" }}>
       <h2 className="mb-4 titulo-form">Datos del cliente</h2>
       <form className="row g-4">
+        {/* Campos de Documento y Nombre */}
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
             Tipo de documento
@@ -116,7 +99,7 @@ const Step5Datos = memo(() => {
         </div>
         <div className="col-md-6">
           <label className="form-label small text-uppercase">
-            Número {loading && " (Validando...)"}
+            Número {loading && "(Validando...)"}
           </label>
           <input
             type="text"
@@ -151,6 +134,7 @@ const Step5Datos = memo(() => {
             required
           />
         </div>
+        {/* Correo y Celular */}
         <div className="col-12">
           <label className="form-label small text-uppercase">Correo *</label>
           <input
@@ -184,7 +168,9 @@ const Step5Datos = memo(() => {
             placeholder="Ej: Aniversario"
           />
         </div>
-        <div className="col-md-12">
+
+        {/* --- REINCORPORACIÓN DE CAMPOS --- */}
+        <div className="col-md-6">
           <label className="form-label small text-uppercase">
             Alergias o Intolerancias
           </label>
@@ -192,24 +178,25 @@ const Step5Datos = memo(() => {
             className="form-control input-datos"
             name="alergias"
             rows="2"
-            value={cliente.alergias}
+            value={cliente.alergias || ""}
             onChange={handleChange}
-            placeholder="Ej: Celíaco, alergia a los mariscos..."
+            placeholder="¿Alguna restricción alimentaria?"
           ></textarea>
         </div>
-        <div className="col-md-12">
+        <div className="col-md-6">
           <label className="form-label small text-uppercase">
-            Requerimientos Adicionales
+            Requerimientos Especiales
           </label>
           <textarea
             className="form-control input-datos"
             name="requerimientos"
             rows="2"
-            value={cliente.requerimientos}
+            value={cliente.requerimientos || ""}
             onChange={handleChange}
-            placeholder="Ej: Silla para bebé, mesa cerca a la ventana..."
+            placeholder="Ej: Silla alta, mesa tranquila..."
           ></textarea>
         </div>
+
         <div className="col-12 text-center mt-5">
           <button
             type="button"
