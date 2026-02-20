@@ -19,7 +19,6 @@ test("Debe renderizar el título de experiencias al cargar el componente", () =>
     </ReservaProvider>,
   );
 
-  // Verificamos que el primer paso sea visible
   const titulo = screen.getByText(/Elige tu Experiencia/i);
   expect(titulo).toBeInTheDocument();
 });
